@@ -9,7 +9,7 @@ You can pass in .zip and .gz files as well as unzipped files
 
 - Clone or fork repo.
 - Run ./gradlew build
-- Run java -jar [path to repo] [folder or file you are parsing]
+- Run java -jar [path to build file] [folder or file you are parsing]
 - Result should return you something that looks like:
 
 
