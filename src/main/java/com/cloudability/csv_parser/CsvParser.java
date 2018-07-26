@@ -83,29 +83,33 @@ public class CsvParser {
         String formattedDate = "";
         List<DbrFiles> beans = new CsvToBeanBuilder<DbrFiles>(new FileReader(dbrFile))
                 .withType(DbrFiles.class).build().parse();
-        for (int i = 0; i < beans.size() - 3; i++) {
+        for (int i = 0; i < beans.size(); i++) {
             DbrFiles bean = beans.get(i);
-            try {
-                cost = Double.parseDouble(bean.getUnblendedCost());
-                String tempDate = bean.getDate();
-                formattedDate = tempDate.substring(0, 10);
-                totalCost = totalCost + cost;
-            } catch (NumberFormatException e) {
-                System.out.println(e);
-            }
-            if (accountIds.containsKey(bean.getUsageAccountId())) {
-                String myVal = String.valueOf(accountIds.get(bean.getUsageAccountId()));
-                double secondCost = Double.parseDouble(myVal);
-                accountIds.put(bean.getUsageAccountId(), cost + secondCost);
-            } else {
-                accountIds.put(bean.getUsageAccountId(), cost);
-            }
-            if (dates.containsKey(formattedDate)) {
-                String myVal = String.valueOf(dates.get(formattedDate));
-                double secondCost = Double.parseDouble(myVal);
-                dates.put(formattedDate, cost + secondCost);
-            } else {
-                dates.put(formattedDate, cost);
+            String recordType = bean.getRecordType();
+            if (recordType.equals("LineItem")) {
+                try {
+                    System.out.println("yes!!!");
+                    cost = Double.parseDouble(bean.getUnblendedCost());
+                    String tempDate = bean.getDate();
+                    formattedDate = tempDate.substring(0, 10);
+                    totalCost = totalCost + cost;
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
+                if (accountIds.containsKey(bean.getUsageAccountId())) {
+                    String myVal = String.valueOf(accountIds.get(bean.getUsageAccountId()));
+                    double secondCost = Double.parseDouble(myVal);
+                    accountIds.put(bean.getUsageAccountId(), cost + secondCost);
+                } else {
+                    accountIds.put(bean.getUsageAccountId(), cost);
+                }
+                if (dates.containsKey(formattedDate)) {
+                    String myVal = String.valueOf(dates.get(formattedDate));
+                    double secondCost = Double.parseDouble(myVal);
+                    dates.put(formattedDate, cost + secondCost);
+                } else {
+                    dates.put(formattedDate, cost);
+                }
             }
         }
     }

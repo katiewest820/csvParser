@@ -8,8 +8,11 @@ public class DbrFiles {
     @CsvBindByName(column = "UsageStartDate")
     private String date;
 
-    @CsvBindByName(column = "Cost")
+    @CsvBindByName(column = "UnblendedCost")
     private String unblendedCost;
+
+    @CsvBindByName(column = "RecordType")
+    private String recordType;
 
     @CsvBindByName(column = "LinkedAccountId")
     private String usageAccountId;
@@ -19,6 +22,7 @@ public class DbrFiles {
         return "DbrFiles{" +
                 "date='" + date + '\'' +
                 ", unblendedCost='" + unblendedCost + '\'' +
+                ", recordType='" + recordType + '\'' +
                 ", usageAccountId='" + usageAccountId + '\'' +
                 '}';
     }
@@ -29,6 +33,10 @@ public class DbrFiles {
 
     public String getUnblendedCost() {
         return unblendedCost;
+    }
+
+    public String getRecordType() {
+        return recordType;
     }
 
     public String getUsageAccountId() {
